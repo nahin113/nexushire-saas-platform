@@ -4,14 +4,16 @@ import { Link, Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
-  const { data: session,error} = authClient.useSession()
-  const user = session?.user
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  const { data: session} = authClient.useSession()
+  console.log(session);
+  const user = session?.user
+  
 
 
   const handleSignOut = async ()=> {
-    await authClient.signOut();
+    await authClient.signOut()
   }
 
   return (
@@ -97,10 +99,7 @@ const Navbar = () => {
             <div className="h-4 w-[1px] bg-zinc-800 mx-6" />
             {user ? (
               <>
-                <Button
-                  variant="ghost"
-                  onClick={handleSignOut}
-                >
+                <Button variant="ghost" onClick={handleSignOut}>
                   Logout
                 </Button>
               </>
@@ -115,12 +114,10 @@ const Navbar = () => {
               </>
             )}
           </div>
-          <Button
-            as={Link}
-            href="/auth/sign-up"
-            className="bg-white text-black font-semibold px-6 py-5 rounded-xl shadow-xl shadow-white/5 hover:bg-zinc-100 transition-all text-sm transform active:scale-95"
-          >
-            Get Started
+          <Button className="bg-white font-semibold px-6 py-5 rounded-xl shadow-xl shadow-white/5 hover:bg-zinc-100 transition-all text-sm transform active:scale-95">
+            <Link href="/auth/sign-up" className="text-black no-underline">
+              Get Started
+            </Link>
           </Button>
         </div>
       </header>

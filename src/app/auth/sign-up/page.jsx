@@ -4,6 +4,7 @@ import { Button, Link } from "@heroui/react";
 import { ArrowLeft } from "@gravity-ui/icons";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { Description, Label, Radio, RadioGroup } from "@heroui/react";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const [isVisible, setIsVisible] = useState(false);
         password: user.password,
         name: user.name,
         image: user.photoUrl,
+        role : user.role,
         callbackURL: "/",
       });
 
@@ -191,6 +193,33 @@ const [isVisible, setIsVisible] = useState(false);
                 )}
               </button>
             </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <Label className="text-xs font-semibold text-zinc-400">
+              Role Selection
+            </Label>
+            <RadioGroup
+              defaultValue="seeker"
+              name="role"
+              orientation="horizontal"
+            >
+              <Radio value="seeker">
+                <Radio.Control>
+                  <Radio.Indicator />
+                </Radio.Control>
+                <Radio.Content>
+                  <Label>Job Seeker</Label>
+                </Radio.Content>
+              </Radio>
+              <Radio value="recruiter">
+                <Radio.Control>
+                  <Radio.Indicator />
+                </Radio.Control>
+                <Radio.Content>
+                  <Label>Recruiter</Label>
+                </Radio.Content>
+              </Radio>
+            </RadioGroup>
           </div>
 
           {/* Conversion Call Submission Button */}
