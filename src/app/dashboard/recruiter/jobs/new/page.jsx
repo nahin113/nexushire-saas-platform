@@ -16,8 +16,8 @@ import {
   toast,
 } from "@heroui/react";
 import { Briefcase, Globe } from "@gravity-ui/icons";
-import { createJob } from "@/lib/actions/jobs";
 import { redirect } from "next/navigation";
+import { createJob } from "@/lib/actions/jobs";
 
 export default function PostJobPage() {
   // Mock configuration for recruiter's authenticated state
@@ -313,11 +313,11 @@ export default function PostJobPage() {
                         EUR (€)
                       </ListBox.Item>
                       <ListBox.Item
-                        id="GBP"
+                        id="TK"
                         className={listItemClasses}
-                        textValue="GBP"
+                        textValue="TK"
                       >
-                        GBP (£)
+                        TK
                       </ListBox.Item>
                     </ListBox>
                   </Select.Popover>
