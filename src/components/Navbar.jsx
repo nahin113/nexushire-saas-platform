@@ -5,13 +5,9 @@ import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
   const { data: session} = authClient.useSession()
-  console.log(session);
   const user = session?.user
-  
-
-
+  console.log(user)
   const handleSignOut = async ()=> {
     await authClient.signOut()
   }
