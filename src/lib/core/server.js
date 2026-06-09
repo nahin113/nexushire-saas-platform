@@ -13,6 +13,5 @@ export const serverMutation = async (path, data) => {
 
 export const serverFetch = async (path) => {
   const res = await fetch(`${baseUrl}${path}`);
-  if (!res.ok) console.log('error here')
-  else return res.json();
+  return res.json();
 };
