@@ -1,42 +1,40 @@
 "use client";
 import { useState } from "react";
-import { Button, Link } from "@heroui/react";
+import { Button, Link, toast } from "@heroui/react";
 import { ArrowLeft } from "@gravity-ui/icons";
 import { authClient } from "@/lib/auth-client";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 const SignInPage = () => {
-    const router = useRouter()
+  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect" || "/");
+
   const toggleVisibility = () => setIsVisible(!isVisible);
-const onSubmit = async (e)=> {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const user = Object.fromEntries(formData.entries())
-    console.log(user)
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
+    console.log(user);
 
     try {
-const { data, error } = await authClient.signIn.email(
-      {
-        email : user.email,
-        password : user.password,
+      const { data, error } = await authClient.signIn.email({
+        email: user.email,
+        password: user.password,
         rememberMe: true,
-      }
-    );
+      });
 
-    if(error) {
-        alert("Unexpecter Error Occured")
+      if (error) {
+        toast("Unexpecter Error Occured");
+      } else toast("success");
+      router.push(redirectTo);
+      router.refresh(); 
+    } catch (err) {
+      console.log(err);
     }
-
-    alert("success")
-    router.push("/")
-    router.refresh()
-
-    } catch(err) {
-        console.log(err)
-    }
-}
-
+  };
 
   return (
     <main className="w-full min-h-screen bg-[#0a0a0c] text-white flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden">
@@ -85,10 +83,7 @@ const { data, error } = await authClient.signIn.email(
         </div>
 
         {/* Sign In Interactive Form Block */}
-        <form
-          onSubmit={onSubmit}
-          className="w-full flex flex-col gap-5"
-        >
+        <form onSubmit={onSubmit} className="w-full flex flex-col gap-5">
           {/* Email Input Field */}
           <div className="flex flex-col gap-1.5 w-full">
             <label className="text-xs font-semibold text-zinc-400 tracking-wide">
@@ -221,7 +216,7 @@ const { data, error } = await authClient.signIn.email(
         <p className="text-xs text-zinc-500 font-normal text-center mt-8">
           Don't have an account?{" "}
           <Link
-            href="/sign-up"
+            href={`/auth/sign-up?redirect=${redirectTo}`}
             className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
           >
             Create account

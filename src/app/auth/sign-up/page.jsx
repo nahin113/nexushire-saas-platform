@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Button, Link } from "@heroui/react";
+import { Button, Link, toast } from "@heroui/react";
 import { ArrowLeft } from "@gravity-ui/icons";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Description, Label, Radio, RadioGroup } from "@heroui/react";
 
 const SignUpPage = () => {
@@ -11,7 +11,8 @@ const SignUpPage = () => {
 const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams('redirect' || '/')
   
 
   const onSubmit = async (e) => {
@@ -31,14 +32,13 @@ const [isVisible, setIsVisible] = useState(false);
         name: user.name,
         image: user.photoUrl,
         role : user.role,
-        callbackURL: "/",
       });
 
       if (error) {
         console.error("Signup error details:", error.message);
       }
-      alert("success")
-      router.push("/")
+      toast("success")
+      router.push(redirectTo)
       
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -276,7 +276,7 @@ const [isVisible, setIsVisible] = useState(false);
         <p className="text-xs text-zinc-500 font-normal text-center mt-8">
           Already have an account?{" "}
           <Link
-            href="/sign-in"
+            href={`/auth/sign-in?redirect=${redirectTo}`}
             className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
           >
             Sign In
