@@ -8,12 +8,11 @@ import { Description, Label, Radio, RadioGroup } from "@heroui/react";
 
 const SignUpPage = () => {
   const router = useRouter();
-const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const searchParams = useSearchParams()
-  const redirectTo = searchParams('redirect' || '/')
-  
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -31,15 +30,14 @@ const [isVisible, setIsVisible] = useState(false);
         password: user.password,
         name: user.name,
         image: user.photoUrl,
-        role : user.role,
+        role: user.role,
       });
 
       if (error) {
         console.error("Signup error details:", error.message);
       }
-      toast("success")
-      router.push(redirectTo)
-      
+      toast("success");
+      router.push(redirectTo);
     } catch (err) {
       console.error("Unexpected error:", err);
     } finally {

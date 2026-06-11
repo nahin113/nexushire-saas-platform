@@ -83,7 +83,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href="/pricing"
+                  href="/plans"
                   className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
                 >
                   Pricing

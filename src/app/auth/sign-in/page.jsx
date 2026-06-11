@@ -10,7 +10,7 @@ const SignInPage = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect" || "/");
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   const onSubmit = async (e) => {
