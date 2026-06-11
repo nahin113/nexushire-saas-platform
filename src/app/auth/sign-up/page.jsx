@@ -23,6 +23,8 @@ const SignUpPage = () => {
 
     console.log("Form Values:", user);
 
+    const plan = user?.role === 'seeker' ? 'seeker_free' : 'recruiter_free'
+
     try {
       // Connects cleanly with your authClient backend configuration
       const { data, error } = await authClient.signUp.email({
@@ -31,6 +33,7 @@ const SignUpPage = () => {
         name: user.name,
         image: user.photoUrl,
         role: user.role,
+        plan : plan
       });
 
       if (error) {
