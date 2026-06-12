@@ -12,6 +12,34 @@ const Navbar = () => {
     await authClient.signOut()
   }
 
+   const navLinks = [
+     {
+       label: "Browse Jobs",
+       href: "/jobs",
+     },
+     {
+       label: "Companies",
+       href: "/companies",
+     },
+     {
+       label: "Pricing",
+       href: "/plans",
+     },
+   ];
+
+   const dashboardLinks = {
+     seeker: "/dashboard/seeker",
+     recruiter: "/dashboard/recruiter",
+     admin: "/dashboard/admin",
+   };
+
+   if (user?.email) {
+     navLinks.push({
+       label: "Dashboard",
+       href: dashboardLinks[user?.role || "seeker"],
+     });
+   }
+
   return (
     <nav className="sticky top-0 z-40 w-full bg-[#121212] text-white">
       <header className="flex h-20 items-center justify-between px-8 max-w-7xl mx-auto">
@@ -65,30 +93,16 @@ const Navbar = () => {
         <div className="hidden md:flex items-center">
           <div className="hidden md:flex items-center bg-zinc-900/80 border border-zinc-800/50 backdrop-blur-md rounded-full px-6 py-2 shadow-inner">
             <ul className="flex items-center gap-8">
-              <li>
-                <Link
-                  href="/jobs"
-                  className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
-                >
-                  Browse Jobs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/companies"
-                  className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
-                >
-                  Company
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/plans"
-                  className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
-                >
-                  Pricing
-                </Link>
-              </li>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="rounded-full px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
             {/* Elegant Thin Separator Line from Image */}
@@ -122,30 +136,16 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="border-t border-zinc-900 bg-[#121212] md:hidden animate-in fade-in slide-in-from-top-5 duration-200">
           <ul className="flex flex-col gap-2 p-6">
-            <li>
-              <Link
-                href="/jobs"
-                className="block py-2 text-zinc-400 hover:text-white"
-              >
-                Browse Jobs
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/companies"
-                className="block py-2 text-zinc-400 hover:text-white"
-              >
-                Company
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/pricing"
-                className="block py-2 text-zinc-400 hover:text-white"
-              >
-                Pricing
-              </Link>
-            </li>
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="rounded-full px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
             <hr className="border-zinc-900 my-2" />
             <li>
               <Link href="/auth/sign-in" className="block py-2 text-indigo-400">
