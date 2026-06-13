@@ -116,13 +116,16 @@ export default function PostJobForm({company}) {
               {company.name}
             </span>
             <span className="text-emerald-500 font-medium bg-emerald-950/30 px-1.5 py-0.5 rounded border border-emerald-900/50">
-              Approved
+              {company.status}
             </span>
           </div>
         </div>
 
+        {company.status !== 'Approved' && <div>
+          <h1>Please Wait to Get Approval</h1>
+          </div>}
         {/* Hero UI Main Form Handler */}
-        <Form
+{ company.status === 'Approved'    &&    <Form
           onSubmit={handleSubmit}
           className="space-y-8"
           validationErrors={errors}
@@ -470,7 +473,7 @@ export default function PostJobForm({company}) {
               Post Job
             </Button>
           </div>
-        </Form>
+        </Form>}
       </div>
     </div>
   );
